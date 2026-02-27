@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>CSE Corporate Calendar</title>
+
+        <link rel="stylesheet" href="{% static 'events/dashboard.css' %}">
+        <link rel="stylesheet" href="{% static 'events/fullcalendar.min.css' %}">
+    </head>
+
+    <body class="dashboard">
+        <canvas id="bg-particles"></canvas>
+        <header class="topbar">
+            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+            <div class="logo">CSE Corporate Calendar</div>
+        </header>
+
+        <div class="layout">
+            <aside class="sidebar-left">
+                <h3>Calendar Controls</h3>
+
+                <div class="control-group">
+                    <label>Jump Year</label>
+                    <select id="jump-year"></select>
+                </div>
+
+                <div class="control-group">
+                    <label>Jump Month</label>
+                    <select id="jump-month">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+
+                <button class="btn-secondary" onclick="jumpToDate()">Go</button>
+
+                <hr>
+
+                <h4>Filters</h4>
+
+                <div class="control-group symbol-group">
+                    <label>Symbol</label>
+                    <div class="symbol-wrapper">
+                        <input type="text" id="symbol-search" placeholder="Search symbol...">
+                        <div id="symbol-dropdown" class="symbol-dropdown"></div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Event Type</label>
+                    <select id="filter-type">
+                        <option value="ALL">All</option>
+                        <option value="DIVIDEND">Dividend</option>
+                        <option value="RIGHTS ISSUE">Rights Issue</option>
+                        <option value="BONUS ISSUE">Bonus Issue</option>
+                        <option value="SPLIT">Split</option>
+                        <option value="EARNINGS">Earnings</option>
+                    </select>
+                </div>
+
+            </aside>
+
+            <main class="calendar-area">
+                <div class="calendar-card">
+                    <div id="calendar_view"></div>
+                </div>
+            </main>
+
+            <aside class="sidebar-right">
+                <div class="panel">
+                    <div class="panel-header" onclick="togglePanel('today-panel')">
+                        <h3>Today Events</h3>
+                        <span>▼</span>
+                    </div>
+                    <div id="today-panel" class="panel-body"></div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header" onclick="togglePanel('upcoming-panel')">
+                        <h3>Upcoming Events</h3>
+                        <span>▼</span>
+                    </div>
+                    <div id="upcoming-panel" class="panel-body"></div>
+                </div>
+            </aside>
+        </div>
+
+        <div id="event-drawer" class="event-drawer">
+            <div class="drawer-header">
+                <h3 id="drawer-title">Event Details</h3>
+                <button onclick="closeDrawer()">✕</button>
+            </div>
+            <div id="drawer-content" class="drawer-content">
+                <p>Select an event</p>
+            </div>
+        </div>
+
+        <script src="{% static 'events/fullcalendar.min.js' %}"></script>
+        <script src="{% static 'events/calendar.js' %}"></script>
+
+    </body>
+</html>
