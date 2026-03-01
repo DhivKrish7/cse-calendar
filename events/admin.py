@@ -25,6 +25,8 @@ class EarningsInline(admin.StackedInline):
 @admin.register(StockEvent)
 class StockEventAdmin(admin.ModelAdmin):
     list_display = ('stock_symbol', 'event_type', 'announcement_date')
+    list_filter = ('event_type',)
+    search_fields = ('stock_symbol',)
 
     inlines = [
         DividendInline,
@@ -37,9 +39,6 @@ class StockEventAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.full_clean()
         super().save_model(request, obj, form, change)
-        
-class Media:
-    js = ('events/admin.js',)
-    
-    list_filter = ('event_type',)
-    search_fields = ('stock_symbol',)
+
+    class Media:
+        js = ('events/admin.js',)
