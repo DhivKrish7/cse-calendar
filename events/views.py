@@ -1,17 +1,14 @@
-from django.shortcuts import render
-from .models import StockEvent
-from django.http import JsonResponse
-from django.utils import timezone
-from django.db.models import Prefetch
-from django.core.cache import cache
 from datetime import datetime
+
+from django.core.cache import cache
+from django.http import JsonResponse
+from django.shortcuts import render
+
+from .models import StockEvent
 
 def calendar_view(request):
     events = StockEvent.objects.all()
     return render(request, 'events/calendar.html', {'events': events})
-
-from django.http import JsonResponse
-from django.core.cache import cache
 
 def events_json(request):
 
@@ -91,10 +88,10 @@ def events_json(request):
 
         if hasattr(e, "bonus_details") and e.bonus_details:
             b = e.bonus_details
-            if b.xb_date:
+            if b.xd_date:
                 events.append({
                     "title": f"{base_title} (XB)",
-                    "start": b.xb_date.strftime("%Y-%m-%d"),
+                    "start": b.xd_date.strftime("%Y-%m-%d"),
                     "extendedProps": {
                         "symbol": e.stock_symbol,
                         "type": e.event_type,
@@ -104,10 +101,10 @@ def events_json(request):
 
         if hasattr(e, "split_details") and e.split_details:
             s = e.split_details
-            if s.xs_date:
+            if s.xd_date:
                 events.append({
                     "title": f"{base_title} (XS)",
-                    "start": s.xs_date.strftime("%Y-%m-%d"),
+                    "start": s.xd_date.strftime("%Y-%m-%d"),
                     "extendedProps": {
                         "symbol": e.stock_symbol,
                         "type": e.event_type,
